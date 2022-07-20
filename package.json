@@ -1,6 +1,6 @@
 {
   "name": "com.hyperskill.hs-test-unity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "hs-test-unity",
   "description": "It is a small framework that simplifies testing educational Unity projects for Hyperskill",
   "unity": "2019.1",
