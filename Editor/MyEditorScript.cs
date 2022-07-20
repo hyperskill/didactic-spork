@@ -1,4 +1,8 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.TestTools.TestRunner.Api;
 using UnityEngine;
@@ -9,25 +13,33 @@ static class MyEditorScript
     static TestCallbacks testCallbacks= new TestCallbacks();
 
     static public String result = String.Empty;
+
+    static public String code = String.Empty;
     
     static MyEditorScript()
     {
         testRunnerApi = ScriptableObject.CreateInstance<TestRunnerApi>();
         testRunnerApi.RegisterCallbacks(testCallbacks);
     }
-    [MenuItem("Window/General/Test Extensions/Run Play Mode Tests")]
     
     public static void RunPlayModeTests()
     {
-        RunTests(TestMode.PlayMode);
+        List<string> categories = new List<string>();
+        for (int i = 1; i <= EditorPrefs.GetInt("Current stage"); i++)
+        {
+            categories.Add(i.ToString());
+        }
+        RunTests(TestMode.PlayMode, categories.ToArray());
     }
-    private static void RunTests(TestMode testModeToRun)
+    private static void RunTests(TestMode testModeToRun, string[] categories)
     {
         testRunnerApi = ScriptableObject.CreateInstance<TestRunnerApi>();
         testRunnerApi.RegisterCallbacks(testCallbacks);
+        
         var filter = new Filter()
         {
-            testMode = testModeToRun
+            testMode = testModeToRun,
+            categoryNames = categories
         };
         
         testRunnerApi.Execute(new ExecutionSettings(filter));
@@ -52,6 +64,16 @@ static class MyEditorScript
             if (next)
             {
                 MyEditorScript.result = "All tests passed!";
+                if (EditorPrefs.GetInt("Current stage") == EditorPrefs.GetInt("Max stage") &&
+                    EditorPrefs.GetInt("Max stage") != EditorPrefs.GetInt("Stages amount"))
+                {
+                    EditorPrefs.SetInt("Max stage",EditorPrefs.GetInt("Max stage")+1);
+                }
+                string code_base = result.Children.First().Children.Last().Test.Description+"_"+
+                                      result.Children.First().Children.Last().EndTime.ToUniversalTime();
+                
+                byte[] bytesToEncode = Encoding.UTF8.GetBytes (code_base);
+                MyEditorScript.code = Convert.ToBase64String (bytesToEncode);
                 EditorWindow win = EditorWindow.GetWindow<CheckWindow>();
                 win.SendEvent(EditorGUIUtility.CommandEvent("FinishedOk"));
             }

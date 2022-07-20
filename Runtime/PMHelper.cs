@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class PMHelper : MonoBehaviour
 {
@@ -247,5 +248,31 @@ public class PMHelper : MonoBehaviour
     {
         int layer = LayerMask.NameToLayer(name);
         return layer >= 0;
+    }
+
+    public static (EditorWindow, double, double) GetCoordinatesOnGameWindow(float fromTop, float fromLeft)
+    {
+        EditorWindow game=null;
+        var windows = (EditorWindow[])Resources.FindObjectsOfTypeAll(typeof(EditorWindow));
+        foreach(var window in windows)
+        {
+            if(window != null && window.GetType().FullName == "UnityEditor.GameView")
+            {
+                game = window;
+                break;
+            }
+        }
+
+        if (!game)
+        {
+            return (null,0,0);
+        }
+        
+        float X = game.position.x+game.position.width*fromTop;
+        float Y = game.position.y+game.position.height*fromLeft;
+        X *= 65535 / Screen.width;
+        Y *= 65535 / Screen.height;
+        
+        return (game, Convert.ToDouble(X), Convert.ToDouble(Y));
     }
 }
