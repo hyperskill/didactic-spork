@@ -26,7 +26,7 @@ static class MyEditorScript
     public static void RunPlayModeTests()
     {
         List<string> categories = new List<string>();
-        for (int i = 1; i <= EditorPrefs.GetInt("Current stage"); i++)
+        for (int i = 1; i <= EditorPrefs.GetInt("Current stage" + projectPathHash.ToString()); i++)
         {
             categories.Add(i.ToString());
         }
