@@ -9,6 +9,7 @@ using UnityEngine;
 [InitializeOnLoad]
 static class MyEditorScript
 {
+    static int projectPathHash = Application.dataPath.GetHashCode( );
     static public TestRunnerApi testRunnerApi;
     static TestCallbacks testCallbacks= new TestCallbacks();
 
@@ -64,10 +65,13 @@ static class MyEditorScript
             if (next)
             {
                 MyEditorScript.result = "All tests passed!";
-                if (EditorPrefs.GetInt("Current stage") == EditorPrefs.GetInt("Max stage") &&
-                    EditorPrefs.GetInt("Max stage") != EditorPrefs.GetInt("Stages amount"))
+                if (EditorPrefs.GetInt("Current stage" + projectPathHash.ToString()) ==
+                    EditorPrefs.GetInt("Max stage" + projectPathHash.ToString()) &&
+                    EditorPrefs.GetInt("Max stage" + projectPathHash.ToString()) !=
+                    EditorPrefs.GetInt("Stages amount" + projectPathHash.ToString()))
                 {
-                    EditorPrefs.SetInt("Max stage",EditorPrefs.GetInt("Max stage")+1);
+                    EditorPrefs.SetInt("Max stage" + projectPathHash.ToString(),
+                        EditorPrefs.GetInt("Max stage" + projectPathHash.ToString()) + 1);
                 }
                 string code_base = result.Children.First().Children.Last().Test.Description+"_"+
                                       result.Children.First().Children.Last().EndTime.ToUniversalTime();
