@@ -267,11 +267,13 @@ public class PMHelper : MonoBehaviour
         {
             return (null,0,0);
         }
-        
-        float X = game.position.x+game.position.width*fromTop;
-        float Y = game.position.y+game.position.height*fromLeft;
-        X *= 65535 / Screen.width;
-        Y *= 65535 / Screen.height;
+
+        game.maximized = true;
+
+        float X = game.position.x + game.position.width * fromTop;
+        float Y = game.position.y + game.position.height * fromLeft;
+        X *= 65535 / Screen.currentResolution.width;
+        Y *= 65535 / Screen.currentResolution.height;
         
         return (game, Convert.ToDouble(X), Convert.ToDouble(Y));
     }
