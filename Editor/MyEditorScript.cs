@@ -9,7 +9,7 @@ using UnityEngine;
 [InitializeOnLoad]
 static class MyEditorScript
 {
-    static int projectPathHash = Application.dataPath.GetHashCode( );
+    static int projectPathHash = Application.productName.GetHashCode( );
     static public TestRunnerApi testRunnerApi;
     static TestCallbacks testCallbacks= new TestCallbacks();
 

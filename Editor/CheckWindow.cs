@@ -45,7 +45,7 @@ public class CheckWindow : EditorWindow
         GUILayout.EndVertical();
         GUILayout.BeginVertical();
         GUILayout.Label("Stage:");
-        int projectPathHash = Application.dataPath.GetHashCode( );
+        int projectPathHash = Application.productName.GetHashCode( );
         EditorPrefs.SetInt("Current stage" + projectPathHash.ToString(),
             EditorGUILayout.IntSlider(leftValue: 1,
                 rightValue: EditorPrefs.GetInt("Max stage" + projectPathHash.ToString()),
@@ -95,7 +95,7 @@ public class CheckWindow : EditorWindow
 }
 public static class StagePreferences
 {
-    static int projectPathHash = Application.dataPath.GetHashCode( );
+    static int projectPathHash = Application.productName.GetHashCode( );
     [PreferenceItem("Stage Preferences")]
     private static void OnPreferencesGUI()
     {
