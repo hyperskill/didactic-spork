@@ -3,6 +3,10 @@ using System.Collections;
 using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEditor.TestTools.TestRunner.Api;
+using System.Collections.Generic;
+using System.Linq;
+
 
 public class CheckWindow : EditorWindow
 {
@@ -45,7 +49,7 @@ public class CheckWindow : EditorWindow
         GUILayout.EndVertical();
         GUILayout.BeginVertical();
         GUILayout.Label("Stage:");
-        int projectPathHash = Application.productName.GetHashCode( );
+        int projectPathHash = Application.dataPath.GetHashCode( );
         EditorPrefs.SetInt("Current stage" + projectPathHash.ToString(),
             EditorGUILayout.IntSlider(leftValue: 1,
                 rightValue: EditorPrefs.GetInt("Max stage" + projectPathHash.ToString()),
@@ -95,7 +99,8 @@ public class CheckWindow : EditorWindow
 }
 public static class StagePreferences
 {
-    static int projectPathHash = Application.productName.GetHashCode( );
+    static int projectPathHash = Application.dataPath.GetHashCode( );
+
     [PreferenceItem("Stage Preferences")]
     private static void OnPreferencesGUI()
     {

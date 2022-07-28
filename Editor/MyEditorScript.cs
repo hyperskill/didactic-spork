@@ -9,7 +9,7 @@ using UnityEngine;
 [InitializeOnLoad]
 static class MyEditorScript
 {
-    static int projectPathHash = Application.productName.GetHashCode( );
+    static int projectPathHash = Application.dataPath.GetHashCode( );
     static public TestRunnerApi testRunnerApi;
     static TestCallbacks testCallbacks= new TestCallbacks();
 
@@ -21,6 +21,21 @@ static class MyEditorScript
     {
         testRunnerApi = ScriptableObject.CreateInstance<TestRunnerApi>();
         testRunnerApi.RegisterCallbacks(testCallbacks);
+    }
+    
+    [InitializeOnLoadMethod]
+    static void SetDefault()
+    {
+        if (!EditorPrefs.HasKey("Stages amount" + projectPathHash.ToString()))
+        {
+            testRunnerApi.RetrieveTestList(TestMode.PlayMode, (testRoot) =>
+            {
+                EditorPrefs.SetInt("Stages amount" + projectPathHash.ToString(),testRoot.Children.First().Children.Count());
+            });
+            
+            EditorPrefs.SetInt("Max stage" + projectPathHash.ToString(),1);
+            EditorPrefs.SetInt("Current stage" + projectPathHash.ToString(),1);
+        }
     }
     
     public static void RunPlayModeTests()
@@ -74,7 +89,7 @@ static class MyEditorScript
                         EditorPrefs.GetInt("Max stage" + projectPathHash.ToString()) + 1);
                 }
                 string code_base = result.Children.First().Children.Last().Test.Description+"_"+
-                                      result.Children.First().Children.Last().EndTime.ToUniversalTime();
+                                   result.Children.First().Children.Last().EndTime.ToUniversalTime();
                 
                 byte[] bytesToEncode = Encoding.UTF8.GetBytes (code_base);
                 MyEditorScript.code = Convert.ToBase64String (bytesToEncode);
