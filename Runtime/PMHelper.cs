@@ -20,6 +20,12 @@ public class PMHelper : MonoBehaviour
     {
         return child.transform.IsChildOf(parent.transform);
     }
+    
+    public static RaycastHit FindHit(Vector3 origin, Vector3 direction, string layer)
+    {
+        RaycastHit[] hit = Physics.RaycastAll(origin, direction);
+        return Array.Find(hit, h => LayerMask.LayerToName(h.collider.gameObject.layer).Equals(layer)); 
+    }
 
     public static bool Check3DPrimitivity(GameObject gameObject, PrimitiveType type)
     {
