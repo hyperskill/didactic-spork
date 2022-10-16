@@ -287,4 +287,19 @@ public class PMHelper : MonoBehaviour
 
         return (game, Convert.ToDouble(X), Convert.ToDouble(Y));
     }
+    public static bool CheckTagExistance(string name)
+    {
+        SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+        SerializedProperty tagsProp = tagManager.FindProperty("tags");
+        for (int i = 0; i < tagsProp.arraySize; i++)
+        {
+            SerializedProperty t = tagsProp.GetArrayElementAtIndex(i);
+            if (t.stringValue.Equals(name))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
