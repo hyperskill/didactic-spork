@@ -130,6 +130,7 @@ static class EditorScript
 
             if (result.TestStatus == TestStatus.Failed)
             {
+                VInput.ReleaseAll();
                 if (next)
                     results = result.Message;
                 next = false;

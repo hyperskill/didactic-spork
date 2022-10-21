@@ -2,7 +2,8 @@
     "name": "hyperskill.hs-test-unity.editor",
     "rootNamespace": "",
     "references": [
-        "GUID:0acc523941302664db1f4e527237feb3"
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:e0bf807728d09eb428a55a8630ed11a8"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
