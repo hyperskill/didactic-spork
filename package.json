@@ -8,6 +8,6 @@
   "type": "tool",
   "hideInEditor": true,
   "dependencies": {
-    "com.hyperskill.unity-input": "https://github.com/hyperskill/unity-input.git"
+    "com.hyperskill.unity-input": "1.0.1"
   }
 }
