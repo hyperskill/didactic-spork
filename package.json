@@ -6,5 +6,8 @@
   "unity": "2019.1",
   "unityRelease": "0b5",
   "type": "tool",
-  "hideInEditor": true
+  "hideInEditor": true,
+  "dependencies": {
+    "com.hyperskill.unity-input": "https://github.com/hyperskill/unity-input.git"
+  }
 }
