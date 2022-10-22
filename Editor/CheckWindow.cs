@@ -1,7 +1,8 @@
+#if UNITY_EDITOR
+
 using System;
 using UnityEditor;
 using UnityEngine;
-
 
 public class CheckWindow : EditorWindow
 {
@@ -117,3 +118,4 @@ public static class StagePreferences
         EditorPrefs.SetInt("Current stage" + projectPathHash.ToString(), current_stage);
     }
 }
+#endif
