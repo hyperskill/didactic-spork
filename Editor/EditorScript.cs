@@ -105,8 +105,9 @@ static class EditorScript
                         EditorPrefs.GetInt("Max stage" + projectPathHash.ToString()) + 1);
                 }
 
+                DateTime dt = result.Children.First().Children.Last().EndTime.ToUniversalTime();
                 string code_base = result.Children.First().Children.Last().Test.Description + "_" +
-                                   result.Children.First().Children.Last().EndTime.ToUniversalTime();
+                                   dt.ToString("dd.MM.yyyy HH:mm:ss");
 
                 byte[] bytesToEncode = Encoding.UTF8.GetBytes(code_base);
                 EditorScript.code = Convert.ToBase64String(bytesToEncode);
