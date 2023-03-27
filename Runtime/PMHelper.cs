@@ -219,6 +219,9 @@ public class PMHelper : MonoBehaviour
         AudioSource[] sources = GameObject.FindObjectsOfType<AudioSource>();
         foreach(AudioSource audioSource in sources)
         {
+            if(!audioSource.clip){
+                continue;
+            }
             if (audioSource.clip.name == name)
             {
                 return audioSource;
