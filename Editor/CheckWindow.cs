@@ -66,7 +66,7 @@ public class CheckWindow : EditorWindow
             GUILayout.Label(icon, red, GUILayout.Width(15));
         }
 
-        GUILayout.Label(EditorScript.result);
+        GUILayout.Label(EditorScript.result, EditorStyles.wordWrappedLabel);
         GUILayout.EndHorizontal();
 
         if (ok)
